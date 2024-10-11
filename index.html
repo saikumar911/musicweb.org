@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Search Engine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            text-align: center;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+        audio {
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1></h1>
+    <input type="text" id="searchInput" placeholder="Search for music...">
+
+    <ul id="musicList">
+        <!-- Music list will be generated here -->
+    </ul>
+
+    <script>
+        // Music data array
+        const musicData = [
+            { title: "bujji theme", artist: "Artist ", file: "bujji.mp3 " },       { title: "Anuvanuvuu", artist: "Artist ", file: "Anuvanuvuu.mp3" },
+            { title: "Sound of salaar", artist: "ravi",file: "sound of salaar.mp3" },
+            { title: "Ayyayyo", artist: "A", file: "Ayyayyo.mp3" },
+            { title: "Soorede from salaar", artist: "Artist ", file: "soorede from salaar.mp3" }
+        ];
+
+        // Function to display music list
+        function displayMusic(musicArray) {
+            const musicList = document.getElementById("musicList");
+            musicList.innerHTML = ""; // Clear previous results
+
+            musicArray.forEach(music => {
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `
+                    <strong>${music.title}</strong> by ${music.artist}
+                    <audio controls>
+                        <source src="${music.file}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                `;
+                musicList.appendChild(listItem);
+            });
+        }
+
+        // Initial display of all music
+        displayMusic(musicData);
+
+        // Search functionality
+        document.getElementById("searchInput").addEventListener("input", function() {
+            const searchText = this.value.toLowerCase();
+            const filteredMusic = musicData.filter(music => 
+                music.title.toLowerCase().includes(searchText) ||
+                music.artist.toLowerCase().includes(searchText)
+            );
+            displayMusic(filteredMusic);
+        });
+    </script>
+
+</body>
+</html>
